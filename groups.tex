@@ -24,6 +24,7 @@
 
 \setlength{\parskip}{6pt}
 \setlength{\parindent}{0pt}
+\newcommand\ord{\text{ord}}
 
 %note title
 \title{Notes in Group Theory}
@@ -47,15 +48,16 @@ Please send any error found to sze.khai0508(at)gmail.com.
 \newpage
 
 \section{Preliminaries}
+We (usually) do not include proof for this section as these are learnt in Algebra I SIM2004.
 
 \subsection{Groups}
 	\begin{define}\label{definition-groups}
-		(Definition of groups) Let $G$ be a set and $\cdot$ an operation on $G$
+		(Definition of groups) Let $G$ be a set and $\cdot$ an operation on $G$. Suppose $G$ satisfies
 		\begin{itemize}
-			\item $\forall a,b \in G;\ a\cdot b\in G$ (closure)
-			\item $\forall a,b,c,\in G;\ a\cdot(b\cdot c) = (a\cdot b) \cdot c$ (associativity)
-			\item $\exists e\in G;\ a\cdot e=a=e\cdot a,\ \forall a\in G$ (identity)
-			\item $\forall a\in G;\ \exists b\in G$ s.t. $a\cdot b=e=b\cdot a$, where we denote such $b = a\inv$ (inverses)
+			\item $\forall a,b \in G;\ a\cdot b\in G$ (closure),
+			\item $\forall a,b,c,\in G;\ a\cdot(b\cdot c) = (a\cdot b) \cdot c$ (associativity),
+			\item $\exists e\in G;\ a\cdot e=a=e\cdot a,\ \forall a\in G$ (identity),
+			\item $\forall a\in G;\ \exists b\in G$ s.t. $a\cdot b=e=b\cdot a$, where we denote such $b = a\inv$ (inverses).
 		\end{itemize}
 
 		Then we say $(G,\cdot)$ is a group. 
@@ -72,14 +74,148 @@ Please send any error found to sze.khai0508(at)gmail.com.
 	\end{theorem}
 
 \subsection{Subgroups}
+	\begin{define}\label{definition-of-subgroup}
+		(Subgroups) Let $G$ be a group and $H\subseteq G$. If $H$ satisfies
+		\begin{itemize}
+			\item $\forall a,b \in H;\ ab\in H$,
+			\item $\forall a,b,c,\in H;\ a(bc) = (ab)c$,
+			\item $\exists e\in H;\ ae=a=ea,\ \forall a\in H$,
+			\item $\forall a\in H;\ \exists a\inv\in H$ s.t. $aa\inv=e=a\inv a$,
+		\end{itemize}
+		then we say $H$ is a subgroup of $G$ and write $H\leq G$.
+	\end{define}
+
+	\begin{theorem}
+		Let $G$ be a group and $H\leq G$. If $e_H$ and $e_G$ are identity of $H$ and $G$ respectively, then $e_H=e_G$.
+	\end{theorem}
+
+	\begin{theorem}
+		Let $G$ be a group, $H\leq G$, and $a\in H \subseteq G$. If $a\inv_H$ and $a\inv_G$ are inverses of $a$ in $H$ and $G$ respectively, then $a\inv_H=a\inv_G$.
+	\end{theorem}
+
+	\begin{theorem}
+		(Subgroup criterion) Let $G$ be a group and $H \subseteq G$. Then $H$ is a subgroup iff $H\neq \emptyset$ and $xy\inv \in H$, $\forall x,y\in H$.
+	\end{theorem}
+
+\subsection{Lagrange theorem}
+	\begin{define}
+		(Coset) Let $G$ be a group and $H\leq G$. We define left coset $gH = \{gh : h\in H\}$ for $g\in G$. Similarly right coset is $Hg = \{hg : h\in H\}$
+	\end{define}
+
+	\begin{theorem}
+		(Left coset equivalent criterion) Let $G$ be a group and $H\leq G$. For $a,b\in H$, $aH=bH$ iff $b\inv a \in H$.
+	\end{theorem}
+
+	\begin{theorem}
+		Let $G$ be a group and $H\leq G$. If $a,b\in G$, then either $aH=bH$ or $aH \cap bH = \emptyset$.
+	\end{theorem}
+
+	\begin{theorem}
+		Let $G$ be a group and $H\leq G$. If $a,b\in G$, then $\abs{aH}=\abs{bH}$. In particular $\abs{gH} = \abs{H}$ for any $g\in G$.
+	\end{theorem}
+
+	\begin{theorem}
+		Let $G$ be a group and $H\leq G$. Then the set of cosets $\{gH : g\in G\}$ form a partition of $G$, i.e. $\cup\{gH : g\in G\} = G$ and the cosets are mutually disjoint.
+	\end{theorem}
+
+	\begin{theorem}
+		(Lagrange) Let $G$ be a finite group and $H\leq G$. Then $\abs{H} \mid \abs{G}$.
+	\end{theorem}
+
+	\begin{define}
+		Let $G$ be a group and $H\leq G$. Then the index of $H$ in $G$ is $[G:H] = \frac{\abs{G}}{\abs{H}}$.
+	\end{define}
+
+	\begin{corollary}
+		Let $G$ be a group and $H\leq G$. Then $[G:H]$ is a positive integer.
+	\end{corollary}
+
+	\subsubsection{Corollaries of Lagrange theorem}
+
+	\begin{theorem}
+		Let $G$ be a group and $a\in G$. Then $\ord(a) \mid \abs{G}$.
+	\end{theorem}
+
+	\begin{corollary}\label{element-at-power-of-group-order-is-identity}
+		Let $G$ be a group of order $n$ and $a\leq G$. Then $a^n = 1$.
+	\end{corollary}
+
+	\begin{theorem}
+		If $G$ is a group of prime order $p$, then $G$ is cyclic.
+	\end{theorem}
+	\begin{proof}
+		Let $a\in G$ be an non-identity element. Then $\abs{\angleb{a}} \mid \abs{G} = p$, hence $\angleb{a}$ has order $p$ since $a$ is non-identity. Therefore $\angleb{a} = G$ and $G$ is cyclic.
+	\end{proof}
 
 \subsection{Normal Subgroups}
+	\begin{define}\label{definition-of-normal-subgroup}
+		(Normal subgroup) Let $G$ be a group and $H\in G$. If $ghg\inv \in H$ for all $h\in H$, $g\in G$ then $H$ is a normal subgroup and we write $H \normsub G$.
+	\end{define}
+
+	\begin{theorem}
+		(Normal subgroup criterion) Let $G$ be a group and $H\subseteq G$. The following are equivalent:
+		\begin{enumerate}[(i)]
+			\item $H\normsub G$
+			\item $(H\neq \emptyset) \wedge (\forall x,y\in H;\ xy\inv \in H) \wedge (\forall h\in H, g\in G;\ ghg\inv \in H)$
+			\item $H\leq G \wedge (\forall g\in G;\ gH=Hg)$
+			\item $H\leq G \wedge (\forall g\in G;\ gHg\inv = H)$ 
+		\end{enumerate}
+	\end{theorem}
+
+	\begin{theorem}
+		Let $G$ be a group and $H\leq G$. If $[G:H] = 2$ then $H\normsub G$.
+	\end{theorem}
+
+	\begin{theorem}
+		(Quotient group) Let $G$ be a group and $H\normsub G$. Let $G/H = \{gH : g\in G\}$ be the set of left cosets. Then $G/H$ forms a group with the operation
+		$$(aH)(bH)=(ab)H,\ a,b\in H.$$
+		We call $G/H$ the quotient group.
+	\end{theorem}
+
+	\begin{corollary}
+		Let $G$ be a group and $H\normsub G$. Then $\abs{G/H} = [G:H]$.
+	\end{corollary}
 
 \subsection{Homomorphisms}
 	\begin{define}
-		Let $G$ and $H$ be groups. A function $f:G \to H$ is a homomorphism if $f(ab)=f(a)f(b)$ for all $a,b\in G$. If $f$ is surjective then we call $f$ an epimorphism. If $f$ is bijective we call $f$ an isomorphism.
+		(Homomorphism) Let $G$ and $H$ be groups. A function $f:G \to H$ is a homomorphism if $f(ab)=f(a)f(b)$ for all $a,b\in G$. If $f$ is surjective then we call $f$ an epimorphism. If $f$ is bijective we call $f$ an isomorphism.
 	\end{define}
 
+	\begin{define}
+		(Kernel and image) Let $G$, $H$ be groups and $f: G\to H$ a homomorphism. Then the kernel of $f$ is
+		$$\ker f = \{g\in G : f(g) = e_H\}$$
+		and the image of $f$ is
+		$$\text{Im} f = \{f(g) : g\in G\} = \{h : h\in H \text{ s.t. } \exists g\in G; f(g)=h\}$$
+	\end{define}
+
+	\begin{theorem}
+		Let $G$ and $H$ be groups and $f: G\to H$ a homomorphism. Then $\ker f \leq G$ and $\text{Im} f \leq H$. Moreover, $\ker f \normsub G$.
+	\end{theorem}
+
+\subsection{Miscellaneous theorems}
+	\begin{theorem}\label{subgroup-of-cyclic-group-is-cyclic}
+		If $H$ is a subgroup of a cyclic group, then $H$ is cyclic.
+	\end{theorem}
+	\begin{proof}
+		Let $H\leq G = \angleb{x}$. We may assume $\abs{H} > 1$. Then there exist $h\in H$ s.t. $h = x^i$ for some non-zero integer $i$. Yet if $i<0$, since $H$ is a group, then $h\inv = x^{-i} \in H$. Therefore there exist natural number $n$ where $x^n\in H$.
+
+		Let $n_0$ be the smallest natural where $x^{n_0} \in H$. We claim that $H=\angleb{x^{n_0}}$. Clearly $\angleb{x^{n_0}} \subseteq H$. Let $y\in H$ where $y=x^i$ for some integer $i$. Similarly we may consider only $i>0$. By the division algorithm, there exist integer $q$ and $0\leq r < n$ where $i = qn_0 + r$. But
+		$$y = x^i = x^{qn_0 + r} = x^r \in H.$$
+		Thus we must have $r=0$ and $n_0 \mid i$. Hence $H \subseteq \angleb{x^{n_0}}$ and therefore $H=\angleb{x^{n_0}}$ as needed.
+	\end{proof}
+
+	\begin{theorem}
+		Suppose $G$ is a cyclic group of order $n$. If $d\mid n$ then $G$ contains exactly one subgroup of order $d$.
+	\end{theorem}
+	\begin{proof}
+		Let $G = \angleb{a}$, $H\leq G$ and $\abs{H} = d$. From theorem \ref{subgroup-of-cyclic-group-is-cyclic} we have $H = \angleb{a^i}$ for some integer $i$. By hypothesis (or Lagrange theorem) we have $n \mid d$. Furthermore, since $a^{id} = 1$ by corollary \ref{element-at-power-of-group-order-is-identity}, we have $id = kn$ for some integer $k$. Hence $i = k\left(\frac{n}{d}\right)$ and $a^i \in \angleb{a^{\frac{n}{d}}}$, therefore $H\subseteq \angleb{a^{\frac{n}{d}}}$.
+
+		Note that $\ord(a^{\frac{n}{d}}) = d$ since for any natural $l$ where $a^{\frac{n}{d}l} = 1$ implies $\frac{n}{d}l = k'n$ for some integer $k'$, thus $d\mid l$ and $d\leq l$.
+
+		Therefore $H = \angleb{a^{\frac{n}{d}}}$. Finally it is easy to see that for any $d\mid n$, $\angleb{a^{\frac{n}{d}}}\leq G$, and we're done.
+	\end{proof}
+
+\newpage
 \section{Isomorphism theorem}
 	\begin{theorem}\label{first-isomorphism-theorem}
 		(First isomorphism theorem) Let $f: G\to H$ be an epimorphism with kernel $K$. Then $K \normsub G$ and $G/K \cong H$.
@@ -107,7 +243,7 @@ Please send any error found to sze.khai0508(at)gmail.com.
 	\begin{proof}
 		Let $a\in T$, $b\in N\cap T$. Clearly $aba\inv \in T$. Since $N\normsub G$, we have $aba\inv \in N$, hence $aba\inv \in N\cap T$ thus $N\cap T \normsub T$.
 
-		Let $f: T \to NT/N$ where $f(a) = aN$ for $a\in T$. Clearly $f$ is a surjective homomorphism. Note that $f(a) = N$ iff $a\in N$, since $a\in T$, we have $a\in N\cap T$. Therefore $ker\ f = N\cap T$. By theorem \ref{first-isomorphism-theorem} we have
+		Let $f: T \to NT/N$ where $f(a) = aN$ for $a\in T$. Clearly $f$ is a surjective homomorphism. Note that $f(a) = N$ iff $a\in N$, since $a\in T$, we have $a\in N\cap T$. Therefore $\ker f = N\cap T$. By theorem \ref{first-isomorphism-theorem} we have
 		$$T/(N\cap T) \cong NT/T$$
 		and we're done. 
 	\end{proof}
@@ -124,9 +260,10 @@ Please send any error found to sze.khai0508(at)gmail.com.
 
 		Now let $g: G/K \to G/H$ by $g(aK) = aH$ for $a\in G$. Since $aK=bK \implies b\inv a \in K \leq H$ hence $b\inv a\in H$ thus $aH=bH$, therefore $g$ is well-defined.
 
-		Clearly $g$ is a surjective homomorphism. Then $g(aK) = H$ iff $a\in H$, i.e. $aK \in H/K$. Thus $ker\ g = H/K$. By theorem \ref{first-isomorphism-theorem}, we are done.
+		Clearly $g$ is a surjective homomorphism. Then $g(aK) = H$ iff $a\in H$, i.e. $aK \in H/K$. Thus $\ker g = H/K$. By theorem \ref{first-isomorphism-theorem}, we are done.
 	\end{proof}
 
+\newpage
 \section{Symmetric groups}
 
 \subsection{Introduction}
@@ -239,16 +376,19 @@ Please send any error found to sze.khai0508(at)gmail.com.
 	\begin{corollary}
 	Let $\sigma\in S_n$, if $\sigma = c_1c_2c_3\cdots c_k$ where $c_i$ are disjoint cycles, and $c_i$ has length $l_i$, then $ord(\sigma)=\text{lcm}(l_1,l_2,\dots,l_k)$.
 	\end{corollary}
+
+\newpage
 \section{Direct product}
 
 
+\newpage
 \appendix
 
 \section{Recommended references}
-\begin{enumerate}
-\item Hall, M., The theory of Groups. DOver Publications; Reprint edition, New York, 2018.
-\item Barnard, T., Neil, H., Discovering Group Theory: A Transition to Advanced Mathematics, Taylor \& Francis Ltd, London, 2016.
-\item Rotman, J.J., An introduction to the theory of groups, 4th edition. Springer-Verlag, New York, 1999.
-\end{enumerate}
+	\begin{enumerate}
+	\item Hall, M., The theory of Groups. DOver Publications; Reprint edition, New York, 2018.
+	\item Barnard, T., Neil, H., Discovering Group Theory: A Transition to Advanced Mathematics, Taylor \& Francis Ltd, London, 2016.
+	\item Rotman, J.J., An introduction to the theory of groups, 4th edition. Springer-Verlag, New York, 1999.
+	\end{enumerate}
 
 \end{document}
