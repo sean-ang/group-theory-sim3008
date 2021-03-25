@@ -216,7 +216,9 @@ We (usually) do not include proof for this section as these are learnt in Algebr
 	\end{proof}
 
 \newpage
-\section{Isomorphism theorem}
+\section{Some important results}
+This section contains results that I can't fit into anywhere.
+\subsection{Isomorphism theorems}
 	\begin{theorem}\label{first-isomorphism-theorem}
 		(First isomorphism theorem) Let $f: G\to H$ be an epimorphism with kernel $K$. Then $K \normsub G$ and $G/K \cong H$.
 	\end{theorem}
@@ -262,6 +264,81 @@ We (usually) do not include proof for this section as these are learnt in Algebr
 
 		Clearly $g$ is a surjective homomorphism. Then $g(aK) = H$ iff $a\in H$, i.e. $aK \in H/K$. Thus $\ker g = H/K$. By theorem \ref{first-isomorphism-theorem}, we are done.
 	\end{proof}
+
+\subsection{Cartesian product of groups}
+	\begin{define}
+		Let $A,B$ be groups. We define the cartesian product of $A$ and $B$ as
+		\begin{equation*}
+			A\times B = \{(a,b) : a\in A, b\in B\}.
+		\end{equation*}
+	\end{define}
+
+	\begin{theorem}
+		Let $A,B$ be groups. Then $A\times B$ is a group under
+		$$(a,b)*(c,d) = (ac,bd),\ \forall a,c\in A,\ b,d\in B.$$
+	\end{theorem}
+	\begin{proof}
+		Let $(a,b),(c,d)\in A\times B$. Since $A,B$ are closed, 
+		$$(a,b)*(c,d) = (ac,bd) \in A\times B$$
+
+		Then, let $(e,f) \in A\times B$. We have
+		\begin{multline*}
+		[(a,b)*(c,d)]*(e,f) = (ac,bd)*(e,f) = ((ac)e, (bd)f)\\ 
+		= (a(ce),b(df)) = (a,c) * (ce,df) = (a,c) * [(c,d) * (e,f)]$$
+		\end{multline*}
+		
+		Note that $(1,1)\in A\times B$. Then for any $(a,b) \in A\times B$
+		, $(a,b)*(1,1) = (a,b) = (1,1) * (a,b)$. Hence $(1,1)$ is the identity.
+
+		If $(a,b)\in A\times B$, then $(a\inv,b\inv) \in A\times B$. Also,
+		$$(a,b)*(a\inv,b\inv) = (1,1) = (a\inv,b\inv) * (a,b)$$
+		and we're done.
+	\end{proof}
+
+	\begin{theorem}
+		Let $A,B$ be groups and $G=A\times B$.Then $A\times \{1\}$ and $\{1\}\times B$ are normal subgroups of $G$.
+	\end{theorem}
+	\begin{proof}
+		Let $(x,y) \in G$ and $a\in A$, hence $(a,1) \in A\times\{1\}$. Clearly, $A\times\{1\} \leq G$. Then
+		$$(x,y)\inv * (a,1) * (x,y) = (x\inv ax,1) \in A\times\{1\}$$
+		Hence $A\times\{1\}$ is normal. Similarly for $\{1\}\times B$.
+	\end{proof}
+
+	\begin{theorem}
+		Let $A,B$ be groups, $H=A\times \{1\}$ and $K=\{1\}\times B$. Then, $H\cap K = \{1=(1,1)\}$, $H,K\normsub G$, and $G = HK$.
+	\end{theorem}
+	\begin{proof}
+		(Basically trivial.)
+	\end{proof}
+
+	\begin{theorem}\label{direct-product-thm}
+		(Internal direct product theorem) Let $H,K\normsub G$. If $H\cap K = \{1\}$ and $G=HK$, then $G\cong H\times K$.
+	\end{theorem}
+	\begin{proof}
+		Let $f: G \to H\times K$\footnotemark where
+		$$f(ab) = a\times b\ \forall a\in H, b\in K$$
+		We shall show that $f$ is well-defined. Suppose we have $a_1, a_2\in H$, $b_1,b_2\in K$ such that $a_1b_1=a_2b_2$. Then $a_2\inv a_1 = b_2b_1\inv$, clearly the left hand side is in $H$, right hand side is in $K$, therefore they are identity since $H\cap K =\{1\}$, which yields $a_1=a_2$, $b_1=b_2$. Hence $f$ is well-defined.
+
+		Now, $f(a_1b_1a_2b_2) = f(a_1 b_1 a_2 b_1\inv b_1 b_2)$. Since $H$ is normal, $a_1 b_1 a_2 b_1\inv \in H$, so
+		$$f(a_1b_1a_2b_2) = (a_1 b_1 a_2 b_1\inv, b_1 b_2) = (a_1,b_1)(b_1 a_2 b_1\inv, b_2).$$
+		Then, consider $b_1 a_2 b_1\inv a_2\inv$. On one hand, $b_1 (a_2 b_1 a_2\inv) \in K$, on the other hand $(b_1 a_2 b_1\inv) a_2\inv \in H$. Hence $b_1 a_2 b_1\inv a_2\inv = 1$ which implies $b_1 a_2 b_1\inv = a_2$.
+		Therefore
+		$$f(a_1b_1a_2b_2)= (a_1,b_1)(a_2,b_2) = f(a_1b_1)f(a_2b_2)$$
+		and $f$ is a homomorphism.
+
+		Clearly $f$ is surjective. For injectivity, if we have $f(a_1b_1)=f(a_2b_2)$ then $(a_1,b_1)=(a_2,b_2)$ which is equivalent to $a_1=a_2$ and $b_1=b_2$. Thus $f$ is bijective and $G\cong H\times K$ as desired.
+	\end{proof}
+	\footnotetext{(Unworthy comment from TSK) Actually we can take $f:H\times K \to G$. Then well-defined becomes trivial, the proof of homomorphism is still the same (more or less), surjectivity remains trivial, and the proof of injectivity is similar to proving well-defined in the original proof. So we only have to worry about two parts.}
+
+	\begin{remark}
+		Another formulation of theorem \ref{direct-product-thm} is $H,K\leq G$ where
+		\begin{enumerate}[(i)]
+			\item $H\cap K = \{1\},$
+			\item for all $h\in H,k\in K$, we have $hk=kh$,
+			\item $G=HK$.
+		\end{enumerate}
+		It is easy to see how (ii) and (iii) implies $H,K\normsub G$. If $H,K\normsub G$, then along with (i) we can show that $hkh\inv k\inv = 1$ hence $hk=kh$ for any $h\in H, k\in K$.
+	\end{remark}
 
 \newpage
 \section{Symmetric groups}
@@ -376,58 +453,6 @@ We (usually) do not include proof for this section as these are learnt in Algebr
 	\begin{corollary}
 	Let $\sigma\in S_n$, if $\sigma = c_1c_2c_3\cdots c_k$ where $c_i$ are disjoint cycles, and $c_i$ has length $l_i$, then $ord(\sigma)=\text{lcm}(l_1,l_2,\dots,l_k)$.
 	\end{corollary}
-
-\newpage
-\section{Direct product}
-	\begin{define}
-		Let $A,B$ be groups. We define the direct product of $A$ and $B$ as
-		\begin{equation*}
-			A\times B = \{(a,b) : a\in A, b\in B\}.
-		\end{equation*}
-	\end{define}
-
-	\begin{theorem}
-		Let $A,B$ be groups. Then $A\times B$ is a group under
-		$$(a,b)*(c,d) = (ac,bd),\ \forall a,c\in A,\ b,d\in B.$$
-	\end{theorem}
-	\begin{proof}
-		Let $(a,b),(c,d)\in A\times B$. Since $A,B$ are closed, 
-		$$(a,b)*(c,d) = (ac,bd) \in A\times B$$
-
-		Then, let $(e,f) \in A\times B$. We have
-		\begin{multline*}
-		[(a,b)*(c,d)]*(e,f) = (ac,bd)*(e,f) = ((ac)e, (bd)f)\\ 
-		= (a(ce),b(df)) = (a,c) * (ce,df) = (a,c) * [(c,d) * (e,f)]$$
-		\end{multline*}
-		
-		Note that $(1,1)\in A\times B$. Then for any $(a,b) \in A\times B$
-		, $(a,b)*(1,1) = (a,b) = (1,1) * (a,b)$. Hence $(1,1)$ is the identity.
-
-		If $(a,b)\in A\times B$, then $(a\inv,b\inv) \in A\times B$. Also,
-		$$(a,b)*(a\inv,b\inv) = (1,1) = (a\inv,b\inv) * (a,b)$$
-		and we're done.
-	\end{proof}
-
-	\begin{theorem}
-		Let $A,B$ be groups and $G=A\times B$.Then $A\times \{1\}$ and $\{1\}\times B$ are normal subgroups of $G$.
-	\end{theorem}
-	\begin{proof}
-		Let $(x,y) \in G$ and $a\in A$, hence $(a,1) \in A\times\{1\}$. Clearly, $A\times\{1\} \leq G$. Then
-		$$(x,y)\inv * (a,1) * (x,y) = (x\inv ax,1) \in A\times\{1\}$$
-		Hence $A\times\{1\}$ is normal. SImilarly for $\{1\}\times B$.
-	\end{proof}
-
-	\begin{theorem}
-		Let $A,B$ be groups, $H=A\times \{1\}$ and $K=\{1\}\times B$. Then, $H\cap K = \{1=(1,1)\}$, $H,K\normsub G$, and $G = HK$.
-	\end{theorem}
-	\begin{proof}
-		(Basically trivial.)
-	\end{proof}
-
-	\begin{theorem}
-		(Direct product theorem) Let $H,K\normsub G$. If $H\cap K = \{1\}$ and $G=HK$, then $G\cong H\times K$.
-	\end{theorem}
-
 
 
 
