@@ -52,7 +52,7 @@ We (usually) do not include proof for this section as these are learnt in Algebr
 
 \subsection{Groups}
 	\begin{define}\label{definition-groups}
-		(Definition of groups) Let $G$ be a set and $\cdot$ an operation on $G$. Suppose $G$ satisfies
+		(Definition of groups) Let $G$ be a set and $(\cdot)$ an operation on $G$. Suppose $G$ satisfies
 		\begin{itemize}
 			\item $\forall a,b \in G;\ a\cdot b\in G$ (closure),
 			\item $\forall a,b,c,\in G;\ a\cdot(b\cdot c) = (a\cdot b) \cdot c$ (associativity),
@@ -279,7 +279,7 @@ We (usually) do not include proof for this section as these are learnt in Algebr
 
 		Now let $\psi \in S_n$. Since function composition is associative, we have $\sigma \circ (\varphi \circ \psi) = (\sigma \circ \varphi) \circ \psi$ for any $\sigma, \varphi, \psi \in S_n$.
 
-		Let $1 : [n] \to [n]$ by $1(k) = k$ for $k\in [n]$. Note that $1\in S_n$ Then $\sigma \circ 1 (k) = \sigma(k) = 1\circ \sigma(k)$ for all $k\in [n]$.
+		Let $1 : [n] \to [n]$ by $1(k) = k$ for $k\in [n]$. Note that $1\in S_n$. Then $\sigma \circ 1 (k) = \sigma(k) = 1\circ \sigma(k)$ for all $k\in [n]$.
 
 		For any $\sigma \in S_n$, $\sigma\inv$ is also a bijective function, hence $\sigma\inv \in S_n$. Furthermore, $\sigma \circ \sigma\inv = 1 = \sigma\inv \circ \sigma$. Therefore $S_n$ is a group under composition as desired.
 	\end{proof}
@@ -379,6 +379,56 @@ We (usually) do not include proof for this section as these are learnt in Algebr
 
 \newpage
 \section{Direct product}
+	\begin{define}
+		Let $A,B$ be groups. We define the direct product of $A$ and $B$ as
+		\begin{equation*}
+			A\times B = \{(a,b) : a\in A, b\in B\}.
+		\end{equation*}
+	\end{define}
+
+	\begin{theorem}
+		Let $A,B$ be groups. Then $A\times B$ is a group under
+		$$(a,b)*(c,d) = (ac,bd),\ \forall a,c\in A,\ b,d\in B.$$
+	\end{theorem}
+	\begin{proof}
+		Let $(a,b),(c,d)\in A\times B$. Since $A,B$ are closed, 
+		$$(a,b)*(c,d) = (ac,bd) \in A\times B$$
+
+		Then, let $(e,f) \in A\times B$. We have
+		\begin{multline*}
+		[(a,b)*(c,d)]*(e,f) = (ac,bd)*(e,f) = ((ac)e, (bd)f)\\ 
+		= (a(ce),b(df)) = (a,c) * (ce,df) = (a,c) * [(c,d) * (e,f)]$$
+		\end{multline*}
+		
+		Note that $(1,1)\in A\times B$. Then for any $(a,b) \in A\times B$
+		, $(a,b)*(1,1) = (a,b) = (1,1) * (a,b)$. Hence $(1,1)$ is the identity.
+
+		If $(a,b)\in A\times B$, then $(a\inv,b\inv) \in A\times B$. Also,
+		$$(a,b)*(a\inv,b\inv) = (1,1) = (a\inv,b\inv) * (a,b)$$
+		and we're done.
+	\end{proof}
+
+	\begin{theorem}
+		Let $A,B$ be groups and $G=A\times B$.Then $A\times \{1\}$ and $\{1\}\times B$ are normal subgroups of $G$.
+	\end{theorem}
+	\begin{proof}
+		Let $(x,y) \in G$ and $a\in A$, hence $(a,1) \in A\times\{1\}$. Clearly, $A\times\{1\} \leq G$. Then
+		$$(x,y)\inv * (a,1) * (x,y) = (x\inv ax,1) \in A\times\{1\}$$
+		Hence $A\times\{1\}$ is normal. SImilarly for $\{1\}\times B$.
+	\end{proof}
+
+	\begin{theorem}
+		Let $A,B$ be groups, $H=A\times \{1\}$ and $K=\{1\}\times B$. Then, $H\cap K = \{1=(1,1)\}$, $H,K\normsub G$, and $G = HK$.
+	\end{theorem}
+	\begin{proof}
+		(Basically trivial.)
+	\end{proof}
+
+	\begin{theorem}
+		(Direct product theorem) Let $H,K\normsub G$. If $H\cap K = \{1\}$ and $G=HK$, then $G\cong H\times K$.
+	\end{theorem}
+
+
 
 
 \newpage
