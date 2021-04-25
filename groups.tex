@@ -27,6 +27,7 @@
 \newcommand\ord{\text{ord}}
 \newcommand\stab{\text{Stab}}
 \newcommand\orb{\text{Orb}}
+\newcommand\ccl{\text{Conj}}
 
 %note title
 \title{Notes in Group Theory}
@@ -555,7 +556,7 @@ This section contains results that I can't fit into anywhere.
 		Let $w\in\orb(x)$, then $w=cx$ for some $c\in G$, and $w=c(a\inv z) = c(a\inv (by))\in \orb(y)$. Therefore $\orb(x)\subseteq\orb(y)$. Similarly $\orb(y) \subseteq \orb(x)$ and we're done.
 	\end{proof}
 
-	\begin{corollary}
+	\begin{corollary}\label{size-of-set-eq-sum-of-orbits}
 		There exist $x_1,x_2\dots,x_m\in X$ such that $\orb(x_1),\orb(x_2),\dots,\orb(x_m)$ forms a partition of $X$. Also
 		$$\abs{X} = \bigcup_{i=1}^m \abs{\orb(x_i)}$$
 	\end{corollary}
@@ -572,10 +573,37 @@ This section contains results that I can't fit into anywhere.
 		and we're done.
 	\end{proof}
 
-	Now we present an alternate proof to theorem \ref{lagrange-theorem}. Let $H\leq G$, and let $H$ acts on $G$ by left multiplication. (TSK: Work in progress)
+	Now we present an alternate proof to theorem \ref{lagrange-theorem}. 
+	\begin{proof}
+		Let $H\leq G$, and let $H$ acts on $G$ by left multiplication. Note that by corollary \ref{size-of-set-eq-sum-of-orbits}, we have $x_1,x_2,\dots,x_m \in G$ such that $\abs{G} = \sum_{i\in [m]} \abs{\orb(x_i)}$. Then by the orbit-stabilizer theorem, we have $\abs{\orb(x)} = \abs{H:\stab(x)}$ for any $x\in G$. Yet $y\in \stab(x)$ implies $yx=x$, hence $y=1$. Thus $\stab(x)=\{1\}$ for any $x\in G$ thus $\abs{H:\stab(x)} = \abs{H}$.
 
+		Then $\abs{G} = \sum_{i\in [m]} \abs{\orb(x_i)} = m\abs{H}$ thus $\abs{H}$ divides $\abs{G}$.
+	\end{proof}
 \subsection{Conjugacy}
-	
+	\begin{define}
+		Let a group $G$ acts on itself. That is, let action $\theta : G\times G \to G$ by $\theta(g,h) = ghg\inv$ for all $g,h\in G$. We call this act by conjugation.
+	\end{define}
+	It is easy to show that conjugation is indeed an action.
+
+	Now, we define several more things. Let $a\in G$. The conjugacy class of $a$ is the orbit of $a$ under conjugacy, denoted by
+	$$\ccl(a) = \orb(x) = \{gag\inv:g\in G\}$$
+	Then, the centralizers of $a$ is the stabilizers of $a$ under conjugacy
+	$$C_G(a) = \stab(a) = \{g\in G : gag\inv = a\} = \{g\in G : ga=ag\}$$
+	Coincidentally, the centralizers are the elements of $G$ that commutes with $a$.
+
+	The centre of $G$, $Z(G)$ is the kernel of the action, i.e. elements who are stabilizer to any other elements.
+	$$Z(G)=\{g\in G : ghg\inv = h\ \forall h\in G\} = \{g\in G : gh = hg\ \forall h\in G\} = \cap_{a\in G} C_G(a)$$
+	So the centre of $G$ contains the element that commutes with everything else.
+
+	\begin{theorem}
+		Let $A=\{a_1,a_2,\dots,a_m\}$ such that $A$ contains exactly one element from each conjugacy class of $G$. Then
+		$$\abs{G} = \abs{Z(G)} + \sum_{a\in A\setminus Z(G)} [G:C_G(a)].$$
+	\end{theorem}
+	\begin{proof}
+		Note that for all $a\in Z(G)$, $C_G(a) = G$ hence $[G:C_G(a)]=1$, also $\ccl(a)=\{a\}$. Therefore all centralizers are the only representative of its conjugacy class. Then using corollary \ref{size-of-set-eq-sum-of-orbits} we have
+		$$\abs{G} = \sum_{a\in A} [G:C_G(a)] = \sum_{a\in Z(G)} [G:C_G(a)] + \sum_{a\in A\setminus Z(G)} [G:C_G(a)] = \abs{Z(G)} + \sum_{a\in A\setminus Z(G)} [G:C_G(a)]$$
+		as desired.
+	\end{proof}
 
 \newpage
 \section{Sylow p-subgroups}
