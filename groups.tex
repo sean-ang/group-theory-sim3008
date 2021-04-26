@@ -28,7 +28,8 @@
 \newcommand\stab{\text{Stab}}
 \newcommand\orb{\text{Orb}}
 \newcommand\ccl{\text{Conj}}
-
+\newcommand\fix{\text{Fix}}
+\DeclarePairedDelimiter\gen{\langle}{\rangle}
 %note title
 \title{Notes in Group Theory}
 %feel free to add your name here! To be fair to everyone, we arrange the names in alphabetical order okay?
@@ -249,7 +250,7 @@ This section contains results that I can't fit into anywhere.
 		Let $a\in T$, $b\in N\cap T$. Clearly $aba\inv \in T$. Since $N\normsub G$, we have $aba\inv \in N$, hence $aba\inv \in N\cap T$ thus $N\cap T \normsub T$.
 
 		Let $f: T \to NT/N$ where $f(a) = aN$ for $a\in T$. Clearly $f$ is a surjective homomorphism. Note that $f(a) = N$ iff $a\in N$, since $a\in T$, we have $a\in N\cap T$. Therefore $\ker f = N\cap T$. By theorem \ref{first-isomorphism-theorem} we have
-		$$T/(N\cap T) \cong NT/T$$
+		$$T/(N\cap T) \cong NT/N$$
 		and we're done. 
 	\end{proof}
 
@@ -519,21 +520,28 @@ This section contains results that I can't fit into anywhere.
 \section{Group actions}
 \subsection{Introduction}
 	\begin{define}\label{group-action-definition}
-		Let $G$ be a group and $X$ be a set. Let function $\theta : G\times X \to X$ satisfying $\theta(g,x) \in X$, $\theta(e,x) = x$ and $\theta(g_1,\theta(g_2,x)) = \theta(g_1g_2,x)$ for all $x\in X$, $g,g_1,g_2\in G$ and $e\in G$ is identity.
+		Let $G$ be a group and $X$ be a set. Let function $\theta : G\times X \to X$ satisfying 
+		\begin{enumerate}
+			\item $\theta(g,x) \in X$, $\forall x\in X$, $g\in G$, 
 
+			\item $\theta(1,x)=x$, $\forall x\in X$,
+
+			\item $\theta(g_1,\theta(g_2,x)) = \theta(g_1g_2,x)$ $\forall x\in X$, $g_1,g_2\in G$,  
+		\end{enumerate}
+		
 		We call $\theta$ a group action of $G$ on $X$.
 	\end{define}
 
 	We will drop the functional notation in favour of the ``left multiplication'' notation, i.e. $\theta(g,x) = gx$. But keep in mind that a group action does not have to be a left multiplication.
 
 	\begin{define}
-		Let $G$ acts on $X$ adn $x\in X$. We define the stabilizer of $x$ 
+		Let $G$ acts on $X$ and $x\in X$. We define the stabilizer of $x$ 
 		$$\stab(x) = \{g\in G : gx=x\},$$
 		and orbit of $x$
 		$$\orb(x) = \{gx : g\in G\}.$$
 	\end{define}
 
-	Essentially, $\stab(x)$ are the identity actions on $x$, and $\orb(x)$ are the possible images of $x$ in the the action of $G$.
+	Essentially, $\stab(x)$ are the identity actions on $x$, and $\orb(x)$ are the possible images of $x$ in the action of $G$.
 
 	\begin{theorem}
 		Let $G$ acts on $X$ and $x\in X$. Then $\stab(x)\leq G$.
@@ -557,11 +565,11 @@ This section contains results that I can't fit into anywhere.
 	\end{proof}
 
 	\begin{corollary}\label{size-of-set-eq-sum-of-orbits}
-		There exist $x_1,x_2\dots,x_m\in X$ such that $\orb(x_1),\orb(x_2),\dots,\orb(x_m)$ forms a partition of $X$. Also
-		$$\abs{X} = \bigcup_{i=1}^m \abs{\orb(x_i)}$$
+		There exist $A = \{x_1,x_2\dots,x_m\}\subseteq X$ such that $\orb(x_1),\orb(x_2),\dots,\orb(x_m)$ forms a partition of $X$. Also
+		$$\abs{X} = \sum_{i=1}^m \abs{\orb(x_i)}$$
 	\end{corollary}
 
-	\begin{theorem}(Orbit-Stabilizer theorem)
+	\begin{theorem}\label{orbit-stabilizer}(Orbit-Stabilizer theorem)
 		Let $G$ acts on $X$ and $x\in X$. Then
 		$$\abs{\orb(x)} = \abs{G:\stab(x)}$$
 		or in other words
@@ -579,6 +587,18 @@ This section contains results that I can't fit into anywhere.
 
 		Then $\abs{G} = \sum_{i\in [m]} \abs{\orb(x_i)} = m\abs{H}$ thus $\abs{H}$ divides $\abs{G}$.
 	\end{proof}
+
+	\begin{define}
+		The kernel of an action of $G$ on $X$ is the set $\{g\in G : gx = x\ \forall x\in X\}$.\footnote{Again, this is not left multiplication.} The fixed point of $X$ under action of $G$ (or the group's set of fixed points) is 
+		\begin{align*}
+		\fix_X(G) &= \{x\in X : [G:\stab(X)]=1\}\\ 
+		&= \{x\in X : \abs{\orb(x)}=1\}\\ 
+		&= \{x\in X : gx = x\ \forall g\in G\}.
+		\end{align*}
+	\end{define}
+
+
+
 \subsection{Conjugacy}
 	\begin{define}
 		Let a group $G$ acts on itself. That is, let action $\theta : G\times G \to G$ by $\theta(g,h) = ghg\inv$ for all $g,h\in G$. We call this act by conjugation.
@@ -586,7 +606,7 @@ This section contains results that I can't fit into anywhere.
 	It is easy to show that conjugation is indeed an action.
 
 	Now, we define several more things. Let $a\in G$. The conjugacy class of $a$ is the orbit of $a$ under conjugacy, denoted by
-	$$\ccl(a) = \orb(x) = \{gag\inv:g\in G\}$$
+	$$\ccl(a) = \orb(a) = \{gag\inv:g\in G\}$$
 	Then, the centralizers of $a$ is the stabilizers of $a$ under conjugacy
 	$$C_G(a) = \stab(a) = \{g\in G : gag\inv = a\} = \{g\in G : ga=ag\}$$
 	Coincidentally, the centralizers are the elements of $G$ that commutes with $a$.
@@ -595,7 +615,7 @@ This section contains results that I can't fit into anywhere.
 	$$Z(G)=\{g\in G : ghg\inv = h\ \forall h\in G\} = \{g\in G : gh = hg\ \forall h\in G\} = \cap_{a\in G} C_G(a)$$
 	So the centre of $G$ contains the element that commutes with everything else.
 
-	\begin{theorem}
+	\begin{theorem}\label{group-order-eqls-sum-center-and-ccls}
 		Let $A=\{a_1,a_2,\dots,a_m\}$ such that $A$ contains exactly one element from each conjugacy class of $G$. Then
 		$$\abs{G} = \abs{Z(G)} + \sum_{a\in A\setminus Z(G)} [G:C_G(a)].$$
 	\end{theorem}
@@ -605,11 +625,160 @@ This section contains results that I can't fit into anywhere.
 		as desired.
 	\end{proof}
 
+	We also have a orbit-stabilizer theorem in the form of centralizer and conjugacy class.
+	\begin{corollary}\label{orbit-stabilizer-conj-form}
+		Let $G$ be a group and $a\in G$, then $[G:C_G(a)]=\ccl(a)$.
+	\end{corollary}
+
+	Now we consider another group action. 
+	\begin{theorem}\label{subgroup-conj}
+		Let $G$ be a group and $X$ be the set of subgroups in $G$. Then $G$ acts by conjugacy on $X$.
+	\end{theorem}
+	\begin{proof}
+		Let $H\in X$. Conditions (ii) and (iii) in definition \ref{group-action-definition} are clear, so we only need to verify that $gHg\inv \in X$, i.e. $gHg\inv \leq G$ for all $g\in G$. 
+
+		Note that $1\in gHg\inv \neq \emptyset$. Let $h,k\in gHg\inv$. Then there exist $h',k' \in H$ where $h=gh'g\inv$ and $k=gk'g\inv$. Now, $hk\inv = gh'g\inv gk'\inv g\inv = g h'k'\inv g\inv \in gHg\inv$. Therefore $gHg\inv\leq G$ and we're done.
+	\end{proof}
+
+	We usually write $gHg\inv = H^g$. The stabilizers of $H$ under the action is called the \textbf{normalizers} of $H$, written as $N_G(H) = \{g\in G : H^g = H\}$.
+
+	\begin{remark}
+		If $H,K\leq G$ are conjugate subgroups, i.e. $K = H^g$ for some $g\in G$, then $H\cong K$.
+	\end{remark}
+
 \newpage
-\section{Sylow p-subgroups}
+\section{Sylow's theorems}
+\subsection{p-groups}
+	\begin{define}
+		A group $G$ is a $p$-group for some prime $p$ if every elements of $G$ is of order power of $p$. That is, for any $g\in G$, $\ord(g) = p^k$ for some non-negative integer $k$.
+
+		A subgroup of $H$ of $G$ is a $p$-subgroup if $H$ is a $p$-group. Furthermore, $H$ is called a Sylow $p$-subgroup of $G$ if $H$ is a maximal $p$-subgroup.
+	\end{define}
+
+	An obvious example of $p$-group is $C_p$. Therefore, it is clear that $G$ has a $p$-subgroup, and by extension, a Sylow $p$-subgroup if $G$ has an element of order $p$ (since $C_p$ is a $p$-subgroup). 
+
+	However, it is not entirely clear that $G$ has such element (given $p\mid \abs{G}$). Also, we don't know how many Sylow $p$-subgroup does $G$ contains, if they exist. This section is dedicated to answer these questions, and their consequences.
+
+\subsection{Cauchy's theorem}
+
+	\begin{theorem}\label{weak-cauchy}
+		Let $G$ be a finite abelian group. If $p \mid \abs{G}$ for some prime $p$, then $G$ has subgroup of order $p$.
+	\end{theorem}
+	\begin{proof}
+		We only need to show that $G$ contains an element of order $p$. We induct on the order of $G$. $\abs{G}=1$ is clear. Now, suppose $G$ is cyclic, i.e. $G = \langle a\rangle$ for some $a\in G$. Let $m=\ord(a)$. Then $m=kp$ for some $k\in \Z$. We have $\ord(a^k)=p$ as needed.
+
+		Otherwise if $G$ is not cyclic, let $a \in G$ where $a\neq 1$. We may assume $p\nmid \ord(a)$, then $p \mid \frac{\abs{G}}{\abs{\langle a\rangle}}$. Note that $\langle a \rangle \normsub G$ since $G$ is abelian, hence $G/\langle a \rangle$ is an abelian group. Moreover, $\abs{G/\langle a \rangle} < \abs{G}$. Therefore by induction hypothesis, $G/\langle a \rangle$ has an element of order $p$, say $b\gen{a}$. Then $p\mid \ord(b)$ since $(b\gen{a})^{\ord(b)} = \gen{a}$, and similarly we have an element of order $p$ as desired.
+	\end{proof}
+
+	\begin{theorem}\label{cauchy-theorem}
+		(Cauchy's theorem) Let $G$ be a finite group. If $p \mid \abs{G}$ for some prime $p$, then $G$ has subgroup of order $p$.
+	\end{theorem}
+	\begin{proof}
+		We only need to show that $G$ contains an element of order $p$. We induct on the order of $G$. Let $A$ be a set containing exactly one element from each conjugacy class of $G$. Let $a \in A\setminus Z(G)$. Since $[G:C_G(a)] \neq 1$ hence $\abs{C_G(a)} < \abs{G}$. If $p\mid C_G(a)$ then we're done.
+
+		Otherwise we may assume that $p\nmid C_G(a)$ for all $a\in A\setminus Z(G)$. This implies $p\mid [G:C_G(A)]$ for all $a\in A\setminus Z(G)$. Since $p \mid \abs{G}$, and by theorem \ref{group-order-eqls-sum-center-and-ccls}, we have $p\mid \abs{Z(G)}$. But $Z(G)$ is abelian, hence it contains an element of order $p$ by theorem \ref{weak-cauchy}, and we're done.
+	\end{proof}
+
+	Therefore, we now know that $G$ has a $p$-subgroup iff $p\mid \abs{G}$. However, there is potential for a stronger result, which is covered in the next section.
+
+	\begin{corollary}\label{p-group-order}
+		If $G$ is a finite $p$-group, then $\abs{G} = p^k$ for some $k\in \Z$.
+	\end{corollary}
+	The proof is easily obtainable by using contradiction with Cauchy's theorem.
 
 
+\subsection{Sylow's theorems}
+	\subsubsection{Prerequisites}
+	We begin by proving some important theorems.
 
+	\begin{theorem}\label{fixed-point-congruence}
+		Let $p$ be a prime. If $G$ is a finite $p$-group acting on a set $X$, then
+		$$\fix_X(G) \equiv \abs{X} \pmod{p}.$$
+	\end{theorem}
+	\begin{proof}
+		By corollary \ref{size-of-set-eq-sum-of-orbits}, let $x_1,x_2,x_3\dots,x_m\in X$ such that $\orb(x_1),\orb(x_2),\dots,\orb(x_m)$ are the only orbits in $X$, then
+		$$\abs{X} = \sum_{i=1}^m \abs{\orb(x_i)}$$
+		Let $A = \{i : [G:\stab(x_i)]=1\}$, hence $\abs{A} = \abs{\fix_X(G)}$. Then note that for $i\in [m]\setminus A$, $p\mid [G:\stab(x_i)]$ by corollary \ref{p-group-order}, hence by theorem \ref{orbit-stabilizer},
+		\begin{align*}
+			\abs{X} &= \sum_{i=1}^m \abs{\orb(x_i)}\\
+			&= \abs{A} + \sum_{i\in [m]\setminus A} \abs{[G:stab(x_i)]}\\
+			&\equiv \abs{A} \pmod{p}\\
+			&=\fix_X(G)
+		\end{align*}
+		and we're done.
+	\end{proof}
+
+	\begin{theorem}\label{stronger-sylow-2}
+		Suppose $H\leq G$, $G$ is finite and $[G:H] = r$ with $\gcd(r,p) = 1$ where $p$ is a prime. If $K$ is a $p$-subgroup of $G$, then $K\leq H^g$ for some $g\in G$.
+	\end{theorem}
+	\begin{proof}
+		Let $X$ be the set of left cosets of $H$, and let $K$ acts on $X$, such that $g(aH) = gaH$ for $g\in K, aH\in X$. From theorem \ref{fixed-point-congruence}, we have $\abs{\fix_X(K)} = \abs{X} = r \pmod{p}$. But $p\nmid r$, therefore $\abs{\fix_X(K)} \neq 0 \pmod{p}$, which yields $\abs{\fix_X(K)} \geq 1$. 
+
+		Let $x_0\in X$ be a fixed point. Therefore $bx_0=x_0$ for all $b\in K$. But $x_0 = a_0H$ for some $a_0\in G$, and $ba_0H = a_0H$. By left coset equivalent criterion, $a_0\inv b a_0 \in H$, $\forall b\in K$. Hence $a_0\inv K a_0 \subset H \implies K \subset H^{a_0\inv}$, and we're done.
+	\end{proof}
+
+	From the hypothesis, $K\leq G$ is a $p$-subgroup, hence $p\mid G$. But $[G:H] = r$ with $\gcd(r,p) = 1$ implies that $p\mid H$. In fact if $\abs{G} = p^km$ where $k,m\in\Z$ such that $\gcd(p^k,m) = 1$, then $p^k \mid H$. That is, $H$ potentially contains some maximal Sylow $p$-subgroup. Also, if $H$ is a Sylow $p$-subgroup, then any other Sylow $p$-subgroup are conjugates of $H$ (Sylow's second theorem).
+
+	\subsubsection{Sylow's theorems (actually talking about the theorems this time)}
+	\begin{theorem}\label{sylow-1}
+		(Sylow's first theorem) Let $\abs{G} = p^m r$, $p$ is a prime and $\gcd(p,r)=1$. Then $G$ contains a subgroup of order $p^m$.
+	\end{theorem}
+	\begin{proof}
+		Let $X = \{K\subset G : \abs{K} = p^m\}$. We have
+		\begin{align*}
+		\abs{X} &= \binom{\abs{G}}{p^m} = \binom{p^mr}{p^m}\\ 
+		&= \frac{p^mr(p^mr-1)(p^mr-2)\cdots(p^m-p^m+1)}{1\cdot 2\cdot 3\cdot \cdots \cdot p^m}\\
+		&=\frac{r(p^mr-1)(p^mr-2)\cdots(p^m-(p^m-1))}{1\cdot 2\cdot 3\cdot \cdots \cdot (p^m-1)}
+		&=r\prod_{i=1}^{p^m-1} \frac{p^mr-i}{i}
+		\end{align*}
+		Let $i=p^kr'$ where $k\leq m, \gcd(p,r)=1$, then $\frac{p^mr-i}{i} = \frac{p^{m-k}r-r'}{r'}$. Therefore the numerator does not have $p$ as divisor,  hence $p\nmid \abs{X}$ and $\gcd(\abs{X},p)=1$.
+
+		Let $G$ acts on $X$, such that $a(K) = aK$ for $a\in G, K\in X$. Let $x_1,x_2,\dots,x_n \in X$ such that $\orb(x_1),\dots,\orb(x_n)$ are the only orbits in $X$ (without repeats). Then by corollary \ref{size-of-set-eq-sum-of-orbits}, 
+		$$\abs{X} = \sum_{i=1}^m \abs{\orb(x_i)} = \sum_{i=1}^m [G:\stab(x_i)]$$
+
+		Now, there must exist $i_0 \in [n]$ such that $p\nmid [G:\stab(x_{i_0})]$ otherwise we have $p\mid \abs{X}$, a contradiction. Also, we have $p^m\div \abs{\stab{x_{i_0}}}$. Hence $\abs{\stab{x_{i_0}}} = p^mr'$ where $\gcd(p,r)=1$.
+
+		Let $b\in x_{i_0}$ and $c\in \stab(x_{i_0})$, since $cx_{i_0} = x_{i_0}$, we have $cb\in x_{i_0}$. Therefore $\stab(x_{i_0})b \subset x_{i_0}$. Thus $\abs{\stab(x_{i_0})b} \leq \abs{x_{i_0}} = p^m$, which implies $\abs{\stab{x_{i_0}}} \leq p^m$. Therefore $r'=1$ and $\stab(x_{i_0}) \leq G$ is a subgroup of order $p^m$, and we're done.
+	\end{proof}
+
+	\begin{theorem}\label{sylow-2}
+		(Sylow's second theorem) Let $P$ be a Sylow $p$-subgroup of $G$ and 
+		$$\wp = \{g\inv Pg : g\in G\}.$$
+		If $Q$ is a Sylow $p$-subgroup of $G$, then $Q\in \wp$.
+	\end{theorem}
+	\begin{proof}
+		From theorem \ref{sylow-1}, we have $\gcd(P,[G:P])=1$. Hence $Q\leq P^g$ for some $g\in G$ by theorem \ref{stronger-sylow-2}. Yet $\abs{Q}=p^m=\abs{P^g}$ by theorem \ref{sylow-1} and remark of theorem \ref{subgroup-conj}. Therefore $Q=P^g$ as needed.
+	\end{proof}
+
+	\begin{theorem}\label{sylow-3}
+		(Sylow's third theorem) Let $P$ be a Sylow $p$-subgroup of $G$ and $n_p$ be the number of Sylow $p$-subgroup of $G$. Then, $n_p = [G:N_G(P)] = \abs{\wp}$ and $n_p\equiv 1 \pmod{p}$.
+	\end{theorem}
+	\begin{proof}
+		The first part is clear from theorem \ref{orbit-stabilizer} and theorem \ref{sylow-2}. We will prove the second part, i.e. $n_p \equiv 1\pmod{p}$. 
+
+		Let $P$ acts on $\wp$ by conjugation. From theorem \ref{fixed-point-congruence} we have
+		$$\abs{\fix_\wp(P)} \equiv \abs{\wp} \equiv n_p \pmod{p}.$$
+		Since $P\leq N_G(P)$, by theorem \ref{sylow-1} we have $p\nmid n_p$, thus $\abs{\fix_\wp(P)} \equiv n_p \not\equiv 0 \pmod{p}$. Thus $\fix_\wp(P)$ is non-empty. 
+
+		Let $Q\in \fix_\wp(P)$, i.e. $Q = P^g$ for some $g\in G$ such that $aQa\inv = Q$ for all $a\in P$. But this implies $P\subset N_G(Q)$ and from this we may show that $PQ\leq G$, by
+		$$(a_1b_1)(a_2b_2)\inv = a_1b_1b_2\inv a_2\inv = (a_1a_2\inv)(a_2b_1b_2\inv a_2\inv) \in PQ\ \forall a_1,a_2\in P, b_1,b_2\in Q.$$
+		Furthermore, $Q\normsub PQ$. Now, similar to theorem \ref{second-isomorphism-theorem}, 
+		$$PQ/Q \cong P/(P\cap Q).$$
+		Note that $p\mid \abs{P\cap Q}$ since $P\cap Q \leq P$. Hence $\abs{P/(P\cap Q)} = p^l$ for some $l\in \Z$. But this implies
+		$$\abs{PQ/Q} = \frac{\abs{PQ}}{\abs{Q}} = p^l \implies \abs{PQ} = p^l\abs{Q}$$
+		and $PQ$ is a $p$-group. Furthermore, by theorem \ref{sylow-1}, $\abs{PQ} = p^lp^m \leq p^m$ implies that $l=0$, and $PQ=Q$. But $P\leq PQ =Q$ hence $P=Q$. 
+
+		Finally $\fix_\wp(P) = \{P\} = 1$ hence $n_p\equiv 1 \pmod{p}$ and we're done.
+	\end{proof}
+
+	\begin{corollary}\label{n_p-div-G/P}
+		Let $P$ be a Sylow $p$-subgroup of $G$ and $n_p$ be the number of Sylow $p$-subgroup in $G$. If $\abs{G} = p^mr$ where $\gcd(p,r)=1$, then $n_p \div r$.
+	\end{corollary}
+	\begin{proof}
+		By theorem \ref{sylow-3}, $n_p = [G:N_G(P)]$. But $P\leq N_G(P)$ hence $N_G(P) = p^mr'$ for some integer $r'$. Then
+		$$n_p = [G:N_G(P)] = \frac{p^mr}{p^mr'} \implies r = n_pr'$$
+		hence $p\mid r$ and we're done.
+	\end{proof}
 
 \newpage
 \appendix
